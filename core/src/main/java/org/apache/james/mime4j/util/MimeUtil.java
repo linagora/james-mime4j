@@ -249,7 +249,7 @@ public final class MimeUtil {
     /**
     Unfold and decode header value
      */
-    public static String sanitizeHeaderValue(String headerValue) {
+    public static String unscrambleHeaderValue(String headerValue) {
         return DecoderUtil.decodeEncodedWords(
             MimeUtil.unfold(headerValue),
             DecodeMonitor.SILENT);
