@@ -34,7 +34,6 @@ import org.junit.Test;
 
 public class DateTimeFieldImplTest {
 
-
     private TimeZone timeZone;
 
     @Before
@@ -50,13 +49,19 @@ public class DateTimeFieldImplTest {
     
     @Test
     public void parseShouldReturnYearWhen4Digits() throws Exception {
-        DateTimeField field = parse("Date: Wed, 13 May 1917 14:18:52Z");
+        DateTimeField field = parse("Date: Sun, 13 May 1917 14:18:52Z");
         assertEquals("Sun May 13 14:18:52 UTC 1917", field.getDate().toString());
     }
 
     @Test
     public void parseShouldAddCenturyWhen2Digits() throws Exception {
-        DateTimeField field = parse("Date: Wed, 13 May 17 14:18:52Z");
+        DateTimeField field = parse("Date: Sat, 13 May 17 14:18:52Z");
+        assertEquals("Sat May 13 14:18:52 UTC 2017", field.getDate().toString());
+    }
+
+    @Test
+    public void dayIsDependentFromTheDateNotFromTheGivenDay() throws Exception {
+        DateTimeField field = parse("Date: Mon, 13 May 17 14:18:52Z");
         assertEquals("Sat May 13 14:18:52 UTC 2017", field.getDate().toString());
     }
 
