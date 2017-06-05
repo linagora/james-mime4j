@@ -19,6 +19,8 @@
 
 package org.apache.james.mime4j.field.datetime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.apache.james.mime4j.MimeException;
 import org.apache.james.mime4j.field.datetime.parser.DateTimeParser;
 import org.apache.james.mime4j.field.datetime.parser.ParseException;
@@ -42,12 +44,12 @@ public class DateTimeTest {
 
 
         ensureAllEqual(new String[]{
-                "Fri, 21 Nov 1997 09:55:06 -0600", // baseline
+                "Fri, 21 Nov 2097 09:55:06 -0600", // baseline
                 "Fri, 21 Nov 97 09:55:06 -0600",   // 2-digit year
-                "Fri, 21 Nov 097 09:55:06 -0600",  // 3-digit year
-                "Fri, 21 Nov 1997 10:55:06 -0500", // shift time zone
-                "Fri, 21 Nov 1997 19:25:06 +0330", // shift time zone
-                "21 Nov 1997 09:55:06 -0600"       // omit day of week
+                "Fri, 21 Nov 197 09:55:06 -0600",  // 3-digit year
+                "Fri, 21 Nov 2097 10:55:06 -0500", // shift time zone
+                "Fri, 21 Nov 2097 19:25:06 +0330", // shift time zone
+                "21 Nov 2097 09:55:06 -0600"       // omit day of week
         });
 
         ensureAllEqual(new String[]{
@@ -101,10 +103,11 @@ public class DateTimeTest {
 
     private void ensureAllEqual(String[] dateStrings) throws ParseException {
         for (int i = 0; i < dateStrings.length - 1; i++) {
-            Assert.assertEquals(
-                    new DateTimeParser(new StringReader(dateStrings[i])).parseAll().getDate().getTime(),
-                    new DateTimeParser(new StringReader(dateStrings[i + 1])).parseAll().getDate().getTime()
-            );
+            long date1 = new DateTimeParser(new StringReader(dateStrings[i])).parseAll().getDate().getTime();
+            long date2 = new DateTimeParser(new StringReader(dateStrings[i + 1])).parseAll().getDate().getTime();
+            assertThat(date1)
+                .as(dateStrings[i] + " == " + dateStrings[i + 1])
+                .isEqualTo(date2);
         }
     }
 
