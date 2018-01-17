@@ -47,14 +47,14 @@ public class DateTimeFieldLenientImpl extends AbstractField implements DateTimeF
         "dd MMM yyyy HH:mm:ss ZZZZ",
         "EEE, dd MMM yyyy HH:mm:ss.SSS 0000",
         "EEE, dd MMM yyyy HH:mm:ss 0000",
-        "EEE, dd MMM yy HH:mm:ss",
-        "dd MMM yy HH:mm:ss",
-        "EEE, dd MMM yy HH:mm:ss.SSS",
-        "EEE, dd MMM yy HH:mm:ss",
-        "EEE, dd MMM yyyy HH:mm:ss",
-        "dd MMM yyyy HH:mm:ss",
-        "EEE, dd MMM yyyy HH:mm:ss.SSS",
-        "EEE, dd MMM yyyy HH:mm:ss",
+        "EEE, dd MMM yy HH:mm:ss X",
+        "dd MMM yy HH:mm:ss X",
+        "EEE, dd MMM yy HH:mm:ss.SSS X",
+        "EEE, dd MMM yy HH:mm:ss X",
+        "EEE, dd MMM yyyy HH:mm:ss X",
+        "dd MMM yyyy HH:mm:ss X",
+        "EEE, dd MMM yyyy HH:mm:ss.SSS X",
+        "EEE, dd MMM yyyy HH:mm:ss X",
     };
 
     private final List<String> datePatterns;
