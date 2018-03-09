@@ -26,7 +26,7 @@ import org.apache.james.mime4j.MimeException;
  */
 public final class MimeConfig {
 
-    private static final MimeConfig LENIENT = MimeConfig.custom()
+    public static final MimeConfig LENIENT = MimeConfig.custom()
         .setMaxContentLen(-1)
         .setMaxHeaderCount(-1)
         .setMaxHeaderLen(-1)
