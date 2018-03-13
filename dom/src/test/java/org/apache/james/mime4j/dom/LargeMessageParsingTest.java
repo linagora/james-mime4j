@@ -45,4 +45,38 @@ public class LargeMessageParsingTest {
         messageBuilder.setMimeEntityConfig(MimeConfig.PERMISSIVE);
         messageBuilder.parseMessage(new ByteArrayInputStream(outputStream.toByteArray()));
     }
+
+    @Test
+    public void parsingAMessageWithLongLinesWithPermissiveConfigShouldSucceed() throws Exception {
+        ByteArrayOutputStream longLineOutputStream = new ByteArrayOutputStream( 1024 * 1024);
+        ByteArrayOutputStream longHeaderOutputStream = new ByteArrayOutputStream( 1024 * 1024);
+
+        longHeaderOutputStream.write("header: ".getBytes());
+        // Each header is ~ 500 Ko
+        for (int i = 0; i < 50 * 1024; i++) {
+            longHeaderOutputStream.write("0123456789".getBytes());
+        }
+        longHeaderOutputStream.write("\r\n".getBytes());
+
+        // Each line is ~ 1Mo
+        for (int i = 0; i < 100 * 1024; i++) {
+            longLineOutputStream.write("0123456789".getBytes());
+        }
+        longLineOutputStream.write("\r\n".getBytes());
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(100 * 1024 * 1024);
+        // 60 * 0.5 = ~ 30 Mo of headers
+        for (int i = 0; i < 60; i++) {
+            outputStream.write(longHeaderOutputStream.toByteArray());
+        }
+        outputStream.write("\r\n".getBytes());
+        // 60 * 1 = ~ 60 Mo of body
+        for (int i = 0; i < 60; i++) {
+            outputStream.write(longLineOutputStream.toByteArray());
+        }
+
+        DefaultMessageBuilder messageBuilder = new DefaultMessageBuilder();
+        messageBuilder.setMimeEntityConfig(MimeConfig.PERMISSIVE);
+        messageBuilder.parseMessage(new ByteArrayInputStream(outputStream.toByteArray()));
+    }
 }
