@@ -43,9 +43,9 @@ public class MultipartImpl extends AbstractMultipart {
         this(subType, Collections.<NameValuePair>emptyList());
     }
 
-        /**
-         * Creates a new empty <code>Multipart</code> instance.
-         */
+    /**
+     * Creates a new empty <code>Multipart</code> instance.
+     */
     public MultipartImpl(String subType, List<NameValuePair> parameters) {
         super(subType, parameters);
         preamble = null;
