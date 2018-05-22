@@ -48,8 +48,7 @@ public class DefaultAddressParser implements AddressParser {
      * @throws ParseException if the raw string does not represent a single address.
      */
     public Address parseAddress(CharSequence text, DecodeMonitor monitor) throws ParseException {
-        AddressListParser parser = new AddressListParser(InputStreams.create(text, Charsets.UTF_8));
-        return Builder.getInstance().buildAddress(parser.parseAddress(), monitor);
+        return Builder.getInstance().buildAddress(createParser(text).parseAddress(), monitor);
     }
 
     public Address parseAddress(CharSequence text) throws ParseException {
@@ -65,8 +64,7 @@ public class DefaultAddressParser implements AddressParser {
      */
     public AddressList parseAddressList(CharSequence text, DecodeMonitor monitor)
             throws ParseException {
-        AddressListParser parser = new AddressListParser(InputStreams.create(text, Charsets.UTF_8));
-        return Builder.getInstance().buildAddressList(parser.parseAddressList(), monitor);
+        return Builder.getInstance().buildAddressList(createParser(text).parseAddressList(), monitor);
     }
 
     public AddressList parseAddressList(CharSequence text) throws ParseException {
@@ -85,8 +83,12 @@ public class DefaultAddressParser implements AddressParser {
      *             address.
      */
     public Mailbox parseMailbox(CharSequence text, DecodeMonitor monitor) throws ParseException {
-        AddressListParser parser = new AddressListParser(InputStreams.create(text, Charsets.UTF_8));
-        return Builder.getInstance().buildMailbox(parser.parseMailbox(), monitor);
+        return Builder.getInstance().buildMailbox(createParser(text).parseMailbox(), monitor);
+    }
+
+    private AddressListParser createParser(CharSequence text) {
+        return new AddressListParser(InputStreams.create(text, Charsets.UTF_8),
+            Charsets.UTF_8.name());
     }
 
     public Mailbox parseMailbox(CharSequence text) throws ParseException {
